@@ -90,7 +90,18 @@ h2 {
 	opacity: 0;
 }
 
+.tray {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
 input {
+	display: block;
+	margin: 0.5em;
+
 	padding: 0.5em;
 	font-family: cursive;
 	background: black;
@@ -100,16 +111,27 @@ input {
 	
 	font-size: 16pt;
 	box-sizing: border-box;
-	width: 100%;
-	transition: transform 0.5s ease-in-out;
+	transition: filter 0.5s ease-in-out;
 }
 
 input:disabled {
-	transform: scale(0);
+	filter: brightness(0);
+}
+
+div.mark {
+	font-size: 1.5em;
+	line-height: 2em;
+	width: 2em;
+	height: 2em;
 }
 
 button {
-	position: absolute:
-	bottom: 0;
-	right: 0;
+	display: block;
+	margin: 0.25em;
+	font-size: small;
+	padding: 0.5em;
+	background: #242;
+	color: white;
+	font-weight: bold;
+	border-radius: 0.25em;
 }

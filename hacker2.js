@@ -4,7 +4,7 @@ const QUESTIONS = []
 let SCORE = 0
 
 function updateNav() {
-	NAV.innerHTML = `Hacker score = ${SCORE} out of 10`
+	NAV.innerHTML = `Hacker score = ${SCORE} out of ${QUESTIONS.length}`
 }
 
 class Question {
@@ -38,7 +38,18 @@ class TextQuestion extends Question {
 	constructor(md5) {
 		super()
 		this.inputElement = this.element.querySelector("input")
-		this.inputElement.addEventListener("input", e => this.check())
+		this.inputElement.remove()
+		const tray = u("<div class='tray'>")
+		this.markSymbol = u("<div class='mark'>").nodes[0]
+		const checkButton = u("<button>Check answer</button>").nodes[0]
+
+		tray.append(checkButton)
+		tray.append(this.inputElement)
+		tray.append(this.markSymbol)
+		
+		u(this.element).append(tray)
+		
+		checkButton.addEventListener("click", e => this.check())
 	}
 	
 	solve() {
@@ -48,12 +59,20 @@ class TextQuestion extends Question {
 	
 	check() {
 		const value = this.inputElement.value.toUpperCase().replace(/\s+/g, "")
-		const answerMd5 = md5(value)
 		const correctMd5 = this.inputElement.getAttribute("data-md5")
-		if (answerMd5 === correctMd5) {
+		let match = false
+
+		for (let i = 1; i <= value.length && !match; i += 1) {
+			const answerMd5 = md5(value.slice(0, i))
+			if (answerMd5 === correctMd5) match = true
+		}
+
+		if (match) {
 			this.solve()
+			this.markSymbol.innerHTML = "&#x2713;"
 		} else {
-			console.log(`MD5=${answerMd5}`)
+			console.log(`MD5=${md5(value)}`)
+			this.markSymbol.innerHTML = "&#x274c;"
 		}
 	}
 }
