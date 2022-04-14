@@ -78,11 +78,11 @@ class TextQuestion extends Question {
 }
 
 function main() {
-	updateNav()
 	for (let section of u("section").nodes) {
 		new TextQuestion(section)
 	}
 	Lightense(".lightbox")
+	updateNav()
 }
 
 main()
